@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Typing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #game-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #number-display {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        #input-field {
+            font-size: 1.5em;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 100px;
+            text-align: center;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="number-display"></div>
+        <input type="text" id="input-field" maxlength="2">
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        const numberDisplay = document.getElementById('number-display');
+        const inputField = document.getElementById('input-field');
+        const feedback = document.getElementById('feedback');
+
+        let currentNumber;
+
+        function generateNumber() {
+            currentNumber = Math.floor(Math.random() * 100);
+            numberDisplay.textContent = currentNumber;
+            inputField.value = '';
+            feedback.textContent = '';
+        }
+
+        function checkInput() {
+            const userInput = parseInt(inputField.value);
+            if (userInput === currentNumber) {
+                feedback.textContent = 'Correct! Great job!';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = 'Incorrect! Try again.';
+                feedback.style.color = 'red';
+            }
+            setTimeout(generateNumber, 2000);
+        }
+
+        inputField.addEventListener('input', function() {
+            if (inputField.value.length === 2) {
+                checkInput();
+            }
+        });
+
+        generateNumber();
+    </script>
+</body>
+</html>
