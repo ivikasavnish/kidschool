@@ -93,12 +93,12 @@
                 feedback.style.color = 'red';
                 body.style.backgroundColor = '#ffcccc';
             }
-            setTimeout(generateNumber, 20000);
         }
 
-        inputField.addEventListener('input', function() {
-            if (inputField.value.length >= 2) {
+        inputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
                 checkInput();
+                setTimeout(generateNumber, 500);
             }
         });
 
