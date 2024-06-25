@@ -30,7 +30,7 @@
             padding: 10px;
             border: 2px solid #ccc;
             border-radius: 5px;
-            width: 100px;
+            width: 200px;
             text-align: center;
         }
         #feedback {
@@ -42,7 +42,7 @@
 <body>
     <div id="game-container">
         <div id="number-display"></div>
-        <input type="text" id="input-field" maxlength="2">
+        <input type="text" id="input-field">
         <div id="feedback"></div>
     </div>
 
@@ -50,30 +50,54 @@
         const numberDisplay = document.getElementById('number-display');
         const inputField = document.getElementById('input-field');
         const feedback = document.getElementById('feedback');
+        const body = document.body;
+
+        const numbers = [
+            "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"
+        ];
+
+        const fruits = [
+            { name: "Apple", icon: "🍎" }, { name: "Banana", icon: "🍌" }, { name: "Cherry", icon: "🍒" }, 
+            { name: "Date", icon: "🌴" }, { name: "Elderberry", icon: "🍇" }, { name: "Fig", icon: "🍇" },
+            { name: "Grape", icon: "🍇" }, { name: "Honeydew", icon: "🍈" }, { name: "Kiwi", icon: "🥝" },
+            { name: "Lemon", icon: "🍋" }, { name: "Mango", icon: "🥭" }, { name: "Nectarine", icon: "🍑" },
+            { name: "Orange", icon: "🍊" }, { name: "Papaya", icon: "🍈" }, { name: "Quince", icon: "🍏" },
+            { name: "Raspberry", icon: "🍇" }, { name: "Strawberry", icon: "🍓" }, { name: "Tomato", icon: "🍅" },
+            { name: "Ugli fruit", icon: "🍊" }, { name: "Watermelon", icon: "🍉" }
+        ];
 
         let currentNumber;
 
         function generateNumber() {
-            currentNumber = Math.floor(Math.random() * 100);
+            currentNumber = Math.floor(Math.random() * 20) + 1;
             numberDisplay.textContent = currentNumber;
             inputField.value = '';
             feedback.textContent = '';
+            body.style.backgroundColor = '#f0f0f0';
+        }
+
+        function getRandomFruit() {
+            const fruit = fruits[Math.floor(Math.random() * fruits.length)];
+            return `${fruit.icon} ${fruit.name}`;
         }
 
         function checkInput() {
-            const userInput = parseInt(inputField.value);
-            if (userInput === currentNumber) {
-                feedback.textContent = 'Correct! Great job!';
+            const userInput = inputField.value.toLowerCase().trim();
+            if (userInput === numbers[currentNumber - 1]) {
+                feedback.textContent = `Correct! Here is a fruit: ${getRandomFruit()}`;
                 feedback.style.color = 'green';
+                body.style.backgroundColor = '#f0f0f0';
             } else {
                 feedback.textContent = 'Incorrect! Try again.';
                 feedback.style.color = 'red';
+                body.style.backgroundColor = '#ffcccc';
             }
             setTimeout(generateNumber, 2000);
         }
 
         inputField.addEventListener('input', function() {
-            if (inputField.value.length === 2) {
+            if (inputField.value.length >= 2) {
                 checkInput();
             }
         });
