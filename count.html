@@ -37,6 +37,12 @@
             margin-top: 20px;
             font-size: 1.2em;
         }
+        #correct-answer {
+            margin-top: 20px;
+            font-size: 2em;
+            color: blue;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -44,12 +50,14 @@
         <div id="number-display"></div>
         <input type="text" id="input-field">
         <div id="feedback"></div>
+        <div id="correct-answer"></div>
     </div>
 
     <script>
         const numberDisplay = document.getElementById('number-display');
         const inputField = document.getElementById('input-field');
         const feedback = document.getElementById('feedback');
+        const correctAnswerDisplay = document.getElementById('correct-answer');
         const body = document.body;
 
         const numbers = [
@@ -74,6 +82,7 @@
             numberDisplay.textContent = currentNumber;
             inputField.value = '';
             feedback.textContent = '';
+            correctAnswerDisplay.textContent = '';
             body.style.backgroundColor = '#f0f0f0';
         }
 
@@ -88,17 +97,19 @@
                 feedback.textContent = `Correct! Here is a fruit: ${getRandomFruit()}`;
                 feedback.style.color = 'green';
                 body.style.backgroundColor = '#f0f0f0';
+                setTimeout(generateNumber, 3000);
             } else {
                 feedback.textContent = 'Incorrect! Try again.';
                 feedback.style.color = 'red';
                 body.style.backgroundColor = '#ffcccc';
+                correctAnswerDisplay.textContent = `The correct answer is: ${numbers[currentNumber - 1]}`;
+                setTimeout(generateNumber, 30000);
             }
         }
 
         inputField.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 checkInput();
-                setTimeout(generateNumber, 500);
             }
         });
 
